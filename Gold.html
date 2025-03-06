@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <!-- Character encoding -->
+    <meta charset="UTF-8">
+
+    <!-- Viewport settings for responsive design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Description for SEO -->
+    <meta name="description" content="Income Tax Calculator - Calculate your taxes easily with our free online tool. Compare Old and New Tax Regimes, plan deductions, and optimize your savings. Powered by Thread IoT.">
+
+    <!-- Keywords for SEO -->
+    <meta name="keywords" content="Income Tax Calculator, Tax Planning, Old Regime Tax, New Regime Tax, Tax Deduction Calculator, Online Tax Calculator, Tax Saving Tips, Income Tax India, Finance Calculator">
+
+    <!-- Author tag -->
+    <meta name="author" content="Thread IoT">
+
+    <!-- Theme color for mobile -->
+    <meta name="theme-color" content="#6f42c1">
+
+    <!-- Open Graph meta tags for social sharing -->
+    <meta property="og:title" content="Income Tax Calculator - Thread IoT">
+    <meta property="og:description" content="Compare Old vs. New Tax Regimes and calculate your taxes online. Optimize your savings with this free and user-friendly tool.">
+    <meta property="og:image" content="https://example.com/tax-calculator-image.jpg"> <!-- Replace with your image URL -->
+    <meta property="og:url" content="https://example.com/income-tax-calculator"> <!-- Replace with your actual URL -->
+    <meta property="og:type" content="website">
+
+    <!-- Twitter card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Income Tax Calculator - Compare Old and New Regimes">
+    <meta name="twitter:description" content="Calculate and compare your tax liabilities easily. Powered by Thread IoT.">
+    <meta name="twitter:image" content="https://example.com/tax-calculator-image.jpg"> <!-- Replace with your image URL -->
+
+    <!-- Favicon -->
+    <link rel="icon" href="ThreadIoT.ico" type="image/x-icon">
+    <title>Income Tax Calculator</title>
+ <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            background: linear-gradient(90deg, #4CAF50, #2196F3);
+            color: white;
+            padding: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+			   background: lightgray;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        #tax-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            width: 100%;
+            max-width: 1200px;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 0.7rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .investment-section {
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .investment-section h2 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #4CAF50;
+            text-align: center;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            background-color: #2196F3;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            grid-column: span 2;
+            justify-self: center;
+        }
+
+        .btn:hover {
+            background-color: #1e88e5;
+        }
+
+        #chart-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 1rem 0;
+            grid-column: span 2;
+            justify-self: center;
+        }
+
+        footer {
+            text-align: center;
+            background: linear-gradient(90deg, #4CAF50, #2196F3);
+            color: white;
+            padding: 1.2rem;
+            font-size: 1rem;
+        }
+
+        footer a {
+            color: #ffeb3b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        canvas {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            #tax-form {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+       Porus - Income Tax Calculator - Powered by Thread IoT
+    </header>
+    <div class="container">
+        <form id="tax-form">
+            <div class="form-group">
+                <label for="income">Annual Income (₹):</label>
+                <input type="number" id="income" placeholder="Enter your annual income" required>
+            </div>
+            <div class="form-group">
+                <label for="housing-loan-principal">Housing Loan - Principal Amount (₹):</label>
+                <input type="number" id="housing-loan-principal" placeholder="Enter the principal amount">
+            </div>
+            <div class="form-group">
+                <label for="housing-loan-interest">Housing Loan - Interest Paid (₹):</label>
+                <input type="number" id="housing-loan-interest" placeholder="Enter the interest paid">
+            </div>
+            <div class="form-group">
+                <label for="ppf">PPF / Sukanya Samriddhi Yojana (₹):</label>
+                <input type="number" id="ppf" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="lic">Life Insurance (LIC) (₹):</label>
+                <input type="number" id="lic" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="nsc">National Savings Certificate (NSC) (₹):</label>
+                <input type="number" id="nsc" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="housing-loan-repayment">Repayment of Housing Loan (₹):</label>
+                <input type="number" id="housing-loan-repayment" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="ulip">Unit Linked Insurance Plan (ULIP) (₹):</label>
+                <input type="number" id="ulip" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="mutual-funds">Mutual Funds (₹):</label>
+                <input type="number" id="mutual-funds" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="education-fees">Children Education Fees (₹):</label>
+                <input type="number" id="education-fees" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="term-deposits">Term Deposits (₹):</label>
+                <input type="number" id="term-deposits" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="nps">National Pension Scheme (₹):</label>
+                <input type="number" id="nps" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="mediclaim-individual">Mediclaim - Individual (₹):</label>
+                <input type="number" id="mediclaim-individual" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="mediclaim-parents">Mediclaim - Parents (₹):</label>
+                <input type="number" id="mediclaim-parents" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="education-loan-interest">Education Loan Interest (₹):</label>
+                <input type="number" id="education-loan-interest" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="disability-self">Disability - Self (₹):</label>
+                <input type="number" id="disability-self" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="disability-dependent">Disability - Dependant (₹):</label>
+                <input type="number" id="disability-dependent" placeholder="Enter amount">
+            </div>
+            <div class="form-group">
+                <label for="tax-regime">Choose Tax Regime:</label>
+                <select id="tax-regime">
+                    <option value="old">Old Regime</option>
+                    <option value="new">New Regime</option>
+                </select>
+            </div>
+            <button type="button" class="btn" onclick="calculateTax()">Calculate</button>
+        </form>
+        <div id="chart-container">
+            <canvas id="taxChart"></canvas>
+        </div>
+    </div>
+    <footer>
+        <p>All rights reserved © Thread IoT</p>
+    </footer>
+	
+	 <script>
+        function calculateTax() {
+            const income = parseFloat(document.getElementById('income').value) || 0;
+            const housingPrincipal = parseFloat(document.getElementById('housing-loan-principal').value) || 0;
+            const housingInterest = parseFloat(document.getElementById('housing-loan-interest').value) || 0;
+            const ppf = parseFloat(document.getElementById('ppf').value) || 0;
+            const lic = parseFloat(document.getElementById('lic').value) || 0;
+            const nsc = parseFloat(document.getElementById('nsc').value) || 0;
+            const housingRepayment = parseFloat(document.getElementById('housing-loan-repayment').value) || 0;
+            const ulip = parseFloat(document.getElementById('ulip').value) || 0;
+            const mutualFunds = parseFloat(document.getElementById('mutual-funds').value) || 0;
+            const educationFees = parseFloat(document.getElementById('education-fees').value) || 0;
+            const termDeposits = parseFloat(document.getElementById('term-deposits').value) || 0;
+            const nps = parseFloat(document.getElementById('nps').value) || 0;
+            const mediclaimIndividual = parseFloat(document.getElementById('mediclaim-individual').value) || 0;
+            const mediclaimParents = parseFloat(document.getElementById('mediclaim-parents').value) || 0;
+            const educationLoanInterest = parseFloat(document.getElementById('education-loan-interest').value) || 0;
+            const disabilitySelf = parseFloat(document.getElementById('disability-self').value) || 0;
+            const disabilityDependent = parseFloat(document.getElementById('disability-dependent').value) || 0;
+
+            const deductionsOldRegime = Math.min(
+                ppf + lic + nsc + housingRepayment + ulip + mutualFunds + educationFees + termDeposits,
+                150000
+            ) + housingInterest + nps + mediclaimIndividual + mediclaimParents + educationLoanInterest + disabilitySelf + disabilityDependent;
+
+            const taxableIncomeOldRegime = Math.max(income - deductionsOldRegime, 0);
+
+            const taxableIncomeNewRegime = income; // No deductions considered
+
+            const taxRegime = document.getElementById('tax-regime').value;
+            const taxableIncome = taxRegime === 'old' ? taxableIncomeOldRegime : taxableIncomeNewRegime;
+
+            const taxOld = calculateOldRegimeTax(taxableIncomeOldRegime);
+            const taxNew = calculateNewRegimeTax(taxableIncomeNewRegime);
+
+            renderChart(taxOld, taxNew);
+        }
+
+        function calculateOldRegimeTax(income) {
+            if (income <= 250000) return 0;
+            if (income <= 500000) return (income - 250000) * 0.05;	
+			if (income <= 1000000) return (250000 * 0.05) + ((income - 500000) * 0.2);
+            return (250000 * 0.05) + (500000 * 0.2) + ((income - 1000000) * 0.3);
+        }
+
+        function calculateNewRegimeTax(income) {
+            if (income <= 300000) return 0;
+            if (income <= 600000) return (income - 300000) * 0.05;
+            if (income <= 900000) return (300000 * 0.05) + ((income - 600000) * 0.1);
+            if (income <= 1200000) return (300000 * 0.05) + (300000 * 0.1) + ((income - 900000) * 0.15);
+            if (income <= 1500000) return (300000 * 0.05) + (300000 * 0.1) + (300000 * 0.15) + ((income - 1200000) * 0.2);
+            return (300000 * 0.05) + (300000 * 0.1) + (300000 * 0.15) + (300000 * 0.2) + ((income - 1500000) * 0.3);
+        }
+
+       function renderChart(taxOld, taxNew) {
+    const ctx = document.getElementById('taxChart').getContext('2d');
+
+    // Check if the chart instance already exists, and destroy it if it does
+    if (window.taxChart instanceof Chart) {
+        window.taxChart.destroy();
+    }
+
+    // Create a new chart instance
+    window.taxChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Old Regime', 'New Regime'],
+            datasets: [{
+                label: 'Tax Amount (₹)',
+                data: [taxOld, taxNew],
+                backgroundColor: ['#4CAF50', '#2196F3'],
+                borderColor: ['#388E3C', '#1976D2'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Tax (₹)'
+                    }
+                }
+            }
+        }
+    });
+}
+
+    </script>
+</body>
+</html>
